@@ -1,32 +1,27 @@
-export PATH=$HOME/jdk-9/bin:$PATH
 
-javac -d mods/org.astro         src/org.astro/module-info.java src/org.astro/org/astro/World.java
+
+javac -d mods/org.world         org.world/src/module-info.java src/org.world/org/world/World.java
 
 javac -p mods -d mods/com.com.greetings src/com.com.greetings/module-info.java src/com.com.greetings/com/com.greetings/Main.java
 javac -d mods --module-source-path src $(find src -name "*.java")
-javac -d mods2 --module-source-path src2 $(find src2/org.astro -name "*.java")
+javac -d mods2 --module-source-path src2 $(find src2/org.world -name "*.java")
+
 
 mkdir mods/
   echo $(find src -name "*.java")
   mkdir mlib
-  jar --create --file=mlib/org.astro@1.0.jar         --module-version=1.0 -C mods/org.astro .
-  jar --create --file=mlib/org.astro@2.0.jar         --module-version=2.0 -C mods2/org.astro .
+  jar --create --file=mlib/org.world@1.0.jar         --module-version=1.0 -C mods/org.world .
+  jar --create --file=mlib/org.world@2.0.jar         --module-version=2.0 -C mods2/org.world .
   jar --create --file=mlib/org.luna.jar         --module-version=2.0 -C mods/org.luna .
   jar --create --file=mlib/com.com.greetings.jar         --main-class=com.com.greetings.Main -C mods/com.com.greetings .
 
 java --module-path mods -m com.com.greetings/com.com.greetings.Main
 
-Situatie:
-- nu staan er twee versies van 1 module in de module libraries.
-- Als je de volledige directyory als module libs aangeeft, dan zijn er conflicten.
-    java -p mlib -m com.com.greetings
-- Je kunt een library verwijderen, maar ik wil de echte modulaire oplossing zien: de dependencies managen.
---> Ofwel aangeven welke module met welke versie samenwerkt.
---> Ofwel ...
 
 
 --module—path module-path    -p module-path
 --module-source-path src
 -d destination
-
-java --module-path /home/remco/git/jigsaw/org.luna/target/classes:/home/remco/git/jigsaw/org.astro/target/classes:/home/remco/git/jigsaw/demo/target/classes -m com.greetings
+export PATH=$HOME/jdk-9/bin:$PATH
+java -p org.demo/target/classes:org.world/target/classes -m org.demo/org.demo.Hello
+java -p devday-talk-service/target/classes:devday-workshop-service/target/classes:devday-service/target/classes:devday/target/classes -m  de.consol.devday/de.consol.devday.Devday

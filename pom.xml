@@ -16,7 +16,7 @@
         <module>devday-talk-service</module>
         <module>org.demo</module>
         <module>org.astro</module>
-        <module>org.luna</module>
+        <module>org.world</module>
     </modules>
 
     <build>
@@ -26,6 +26,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.1</version>
                 <configuration>
+                    <verbose>true</verbose>
                     <source>9</source>
                     <target>9</target>
                     <showWarnings>true</showWarnings>

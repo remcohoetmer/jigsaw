@@ -1,3 +1,3 @@
 module org.demo {
-  requires org.astro;
+  requires org.world;
 }

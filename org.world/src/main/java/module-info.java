@@ -1,3 +1,3 @@
-module org.astro {
+module org.world {
   exports org.world;
 }
