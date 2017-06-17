@@ -23,5 +23,9 @@ java --module-path mods -m com.com.greetings/com.com.greetings.Main
 --module-source-path src
 -d destination
 export PATH=$HOME/jdk-9/bin:$PATH
+export JAVA_HOME=$HOME/jdk-9
+mvn3:
+JAVAOPTS="--add-opens java.base/java.lang=ALL-UNNAMED"
+
 java -p org.demo/target/classes:org.world/target/classes -m org.demo/org.demo.Hello
 java -p devday-talk-service/target/classes:devday-workshop-service/target/classes:devday-service/target/classes:devday/target/classes -m  de.consol.devday/de.consol.devday.Devday
