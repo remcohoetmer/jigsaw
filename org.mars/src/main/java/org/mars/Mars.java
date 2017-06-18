@@ -5,6 +5,6 @@ import org.planet.Planet;
 
 public class Mars implements Planet {
   public String getName() {
-    return "mars"+ Common.version;
+    return "Mars common.version="+ Common.version;
   }
 }
