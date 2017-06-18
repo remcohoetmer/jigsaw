@@ -14,9 +14,10 @@
         <module>devday-service</module>
         <module>devday-workshop-service</module>
         <module>devday-talk-service</module>
+        <module>org.planet</module>
+        <module>org.mars</module>
+        <module>org.venus</module>
         <module>org.demo</module>
-        <module>org.astro</module>
-        <module>org.world</module>
     </modules>
 
     <build>

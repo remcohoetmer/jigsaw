@@ -1,9 +1,12 @@
 package org.demo;
 
-import org.world.World;
+import org.mars.Mars;
+import org.planet.Planet;
 
 public class Hello {
   public static void main(String[] args) {
-    System.out.println("Hello " + World.name());
+
+    Planet mars = new Mars();
+    System.out.println("Hello " + mars.getName());
   }
 }

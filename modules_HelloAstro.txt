@@ -1,18 +1,18 @@
 
 
-javac -d mods/org.world         org.world/src/module-info.java src/org.world/org/world/World.java
+javac -d mods/org.mars         org.mars/src/module-info.java src/org.mars/org/world/World.java
 
 javac -p mods -d mods/com.com.greetings src/com.com.greetings/module-info.java src/com.com.greetings/com/com.greetings/Main.java
 javac -d mods --module-source-path src $(find src -name "*.java")
-javac -d mods2 --module-source-path src2 $(find src2/org.world -name "*.java")
+javac -d mods2 --module-source-path src2 $(find src2/org.mars -name "*.java")
 
 
 mkdir mods/
   echo $(find src -name "*.java")
   mkdir mlib
-  jar --create --file=mlib/org.world@1.0.jar         --module-version=1.0 -C mods/org.world .
-  jar --create --file=mlib/org.world@2.0.jar         --module-version=2.0 -C mods2/org.world .
-  jar --create --file=mlib/org.luna.jar         --module-version=2.0 -C mods/org.luna .
+  jar --create --file=mlib/org.mars@1.0.jar         --module-version=1.0 -C mods/org.mars .
+  jar --create --file=mlib/org.mars@2.0.jar         --module-version=2.0 -C mods2/org.mars .
+  jar --create --file=mlib/org.venus.jar         --module-version=2.0 -C mods/org.venus .
   jar --create --file=mlib/com.com.greetings.jar         --main-class=com.com.greetings.Main -C mods/com.com.greetings .
 
 java --module-path mods -m com.com.greetings/com.com.greetings.Main
@@ -27,5 +27,5 @@ export JAVA_HOME=$HOME/jdk-9
 mvn3:
 JAVAOPTS="--add-opens java.base/java.lang=ALL-UNNAMED"
 
-java -p org.demo/target/classes:org.world/target/classes -m org.demo/org.demo.Hello
+java -p org.demo/target/classes:org.mars/target/classes -m org.demo/org.demo.Hello
 java -p devday-talk-service/target/classes:devday-workshop-service/target/classes:devday-service/target/classes:devday/target/classes -m  de.consol.devday/de.consol.devday.Devday

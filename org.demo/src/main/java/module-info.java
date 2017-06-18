@@ -1,3 +1,4 @@
 module org.demo {
-  requires org.world;
+  requires org.mars;
+  requires org.planet;
 }
