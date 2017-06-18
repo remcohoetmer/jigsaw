@@ -1,6 +1,6 @@
 package org.venus;
 
-import org.demo.Planet;
+import org.planet.Planet;
 
 public class Venus implements Planet {
   @Override
