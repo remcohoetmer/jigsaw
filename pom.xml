@@ -10,10 +10,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>devday</module>
+      <!--  <module>devday</module>
         <module>devday-service</module>
         <module>devday-workshop-service</module>
-        <module>devday-talk-service</module>
+        <module>devday-talk-service</module>-->
         <module>org.planet</module>
         <module>org.mars</module>
         <module>org.venus</module>

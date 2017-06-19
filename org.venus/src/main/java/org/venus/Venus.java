@@ -8,6 +8,4 @@ public class Venus implements Planet {
   public String getName() {
     return "Venus common.version=" + Common.version;
   }
-
-
 }

@@ -1,4 +1,5 @@
 module org.mars {
-  requires transitive org.planet;
+  requires org.planet;
+  exports org.common;
   exports org.mars;
 }

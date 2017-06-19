@@ -1,4 +1,5 @@
 module org.venus {
-  opens org.venus;
+  exports org.venus;
+  exports org.common;
   requires org.planet;
 }

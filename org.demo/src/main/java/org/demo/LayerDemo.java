@@ -13,12 +13,33 @@ import java.util.Arrays;
 import java.util.Set;
 
 public class LayerDemo {
-  public static void main(String[] args) throws Exception {
-    Path venusPath = new File("org.venus/target/classes").toPath();
-    Path marsPath = new File("org.mars/target/classes").toPath();
+  Path venusPath = new File("org.venus/target/classes").toPath();
+  Path marsPath = new File("org.mars/target/classes").toPath();
 
+  private void show1Layer() throws Exception {
     ModuleLayer parent = ModuleLayer.boot();
 
+    Configuration config = parent.configuration().resolve(ModuleFinder.of(venusPath, marsPath), ModuleFinder.of(), Set.of("org.venus", "org.mars"));
+// als je ze in dezelfde classloader stopt gaat het mis vanwege org.common
+//    ModuleLayer layer = parent.defineModulesWithOneLoader(config, ClassLoader.getSystemClassLoader());
+    ModuleLayer layer = parent.defineModulesWithManyLoaders(config, ClassLoader.getSystemClassLoader());
+
+
+    Planet planet;
+
+    planet = findPlanet(layer, "org.venus.Venus");
+    System.out.println("Naam: " + planet.getName());
+
+    planet = findPlanet(layer, "org.mars.Mars");
+    System.out.println("Naam: " + planet.getName());
+    findClass(layer, "org.venus", "org.common.Common");
+    findClass(layer, "org.mars", "org.common.Common");
+
+  }
+
+  public void show2Layers() throws Exception {
+
+    ModuleLayer parent = ModuleLayer.boot();
     Configuration venusConfig = parent.configuration().resolve(ModuleFinder.of(venusPath), ModuleFinder.of(), Set.of("org.venus"));
     Configuration marsConfig = parent.configuration().resolve(ModuleFinder.of(marsPath), ModuleFinder.of(), Set.of("org.mars"));
 
@@ -33,6 +54,14 @@ public class LayerDemo {
 
     planet = findPlanet(marsLayer, "org.mars.Mars");
     System.out.println("Naam: " + planet.getName());
+    findClass(venusLayer, "org.venus", "org.common.Common");
+    findClass(marsLayer, "org.mars", "org.common.Common");
+
+  }
+
+  public static void main(String[] args) throws Exception {
+    new LayerDemo().show1Layer();
+    new LayerDemo().show2Layers();
 
   }
 
@@ -49,6 +78,13 @@ public class LayerDemo {
       return planet;
     }
     throw new IllegalArgumentException(String.format("Planet {} not found", planetName));
+  }
+
+  private static void findClass(ModuleLayer layer, String moduleName, String className) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    ClassLoader loader = layer.findLoader(moduleName);
+
+    Class<?> c = loader.loadClass(className);
+    System.out.println(String.format("%s LoaderName: %s %s", c, moduleName, c.getClassLoader()));
   }
 
   private static String extractModuleName(String className) {

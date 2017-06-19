@@ -40,7 +40,7 @@ public class ClassLoadingDemo {
 
     Planet planet = findPlanet(venusLayer, "org.venus.Venus");
 
-    System.out.println("Naam: " + planet.getName() + planet.getClass().getClassLoader());
+    System.out.println("Naam: " + planet.getName());
 
     /*
 
