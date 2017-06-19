@@ -32,3 +32,8 @@ java -p devday-talk-service/target/classes:devday-workshop-service/target/classe
 
 java -p org.demo/target/classes:org.mars/target/classes:org.planet/target/classes -m org.demo/org.demo.Hello
 java -p org.demo/target/classes:org.mars/target/classes:org.planet/target/classes -m org.demo/org.demo.LayerDemo
+**************************
+java -p /home/remco/git/jigsaw/d/target/classes:/home/remco/git/jigsaw/b/target/classes:/home/remco/.m2/repository/nl/cerios/a/1.0/a-1.0.jar:/home/remco/git/jigsaw/c/target/classes:/home/remco/git/jigsaw/com.foo.a/target/classes -m D/d.D
+
+java -p mods -m de.consol.devday/de.consol.devday.Devday
+

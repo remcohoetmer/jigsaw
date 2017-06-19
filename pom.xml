@@ -10,10 +10,17 @@
     <packaging>pom</packaging>
 
     <modules>
-      <!--  <module>devday</module>
+
+ <!--       <module>a</module>
+        <module>b</module>
+        <module>com.foo.a</module>
+        <module>c</module>
+        <module>d</module>
+        <module>devday</module>
         <module>devday-service</module>
         <module>devday-workshop-service</module>
-        <module>devday-talk-service</module>-->
+        <module>devday-talk-service</module>
+-->
         <module>org.planet</module>
         <module>org.mars</module>
         <module>org.venus</module>
@@ -25,7 +32,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.6.2</version>
                 <configuration>
                     <verbose>true</verbose>
                     <source>9</source>

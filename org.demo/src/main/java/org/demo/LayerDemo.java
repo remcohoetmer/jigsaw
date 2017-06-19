@@ -21,9 +21,8 @@ public class LayerDemo {
 
     Configuration config = parent.configuration().resolve(ModuleFinder.of(venusPath, marsPath), ModuleFinder.of(), Set.of("org.venus", "org.mars"));
 // als je ze in dezelfde classloader stopt gaat het mis vanwege org.common
-//    ModuleLayer layer = parent.defineModulesWithOneLoader(config, ClassLoader.getSystemClassLoader());
+  // ModuleLayer layer = parent.defineModulesWithOneLoader(config, ClassLoader.getSystemClassLoader());
     ModuleLayer layer = parent.defineModulesWithManyLoaders(config, ClassLoader.getSystemClassLoader());
-
 
     Planet planet;
 
@@ -32,6 +31,7 @@ public class LayerDemo {
 
     planet = findPlanet(layer, "org.mars.Mars");
     System.out.println("Naam: " + planet.getName());
+    // Common Module is zichtbaar in beide classloaders
     findClass(layer, "org.venus", "org.common.Common");
     findClass(layer, "org.mars", "org.common.Common");
 
@@ -59,16 +59,37 @@ public class LayerDemo {
 
   }
 
+  public void show2LayersSameModule() throws Exception {
+
+    ModuleLayer parent = ModuleLayer.boot();
+    Configuration venusConfig1 = parent.configuration().resolve(ModuleFinder.of(venusPath), ModuleFinder.of(), Set.of("org.venus"));
+    Configuration venusConfig2 = parent.configuration().resolve(ModuleFinder.of(venusPath), ModuleFinder.of(), Set.of("org.venus"));
+
+    ModuleLayer venusLayer1 = parent.defineModulesWithOneLoader(venusConfig1, ClassLoader.getSystemClassLoader());
+    ModuleLayer venusLayer2 = parent.defineModulesWithOneLoader(venusConfig2, ClassLoader.getSystemClassLoader());
+
+
+    Planet planet;
+
+    planet = findPlanet(venusLayer1, "org.venus.Venus");
+    System.out.println("Naam: " + planet.getName());
+    planet = findPlanet(venusLayer2, "org.venus.Venus");
+    System.out.println("Naam: " + planet.getName());
+
+
+  }
+
   public static void main(String[] args) throws Exception {
     new LayerDemo().show1Layer();
-    new LayerDemo().show2Layers();
+   // new LayerDemo().show2Layers();
+   // new LayerDemo().show2LayersSameModule();
 
   }
 
   private static Planet findPlanet(ModuleLayer layer, String planetName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
     String moduleName = extractModuleName(planetName);
     ClassLoader loader = layer.findLoader(moduleName);
-    System.out.println(String.format("ModuleName: %s LoaderName: %s", moduleName, loader));
+    //System.out.println(String.format("ModuleName: %s LoaderName: %s", moduleName, loader));
 
     Class<?> c = loader.loadClass(planetName);
     if (c.getConstructors().length == 1 && c.getConstructors()[0].getParameterCount() == 0
