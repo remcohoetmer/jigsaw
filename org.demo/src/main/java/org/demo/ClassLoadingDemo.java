@@ -10,30 +10,46 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
-public class LayerDemo {
+public class ClassLoadingDemo {
   public static void main(String[] args) throws Exception {
     Path venusPath = new File("org.venus/target/classes").toPath();
-    Path marsPath = new File("org.mars/target/classes").toPath();
+
 
     ModuleLayer parent = ModuleLayer.boot();
+    ModuleFinder venusFinder = ModuleFinder.of(venusPath);
 
-    Configuration venusConfig = parent.configuration().resolve(ModuleFinder.of(venusPath), ModuleFinder.of(), Set.of("org.venus"));
-    Configuration marsConfig = parent.configuration().resolve(ModuleFinder.of(marsPath), ModuleFinder.of(), Set.of("org.mars"));
+    Configuration venusConfig = parent.configuration().resolve(venusFinder, ModuleFinder.of(), Set.of("org.venus"));
 
-    ModuleLayer venusLayer = parent.defineModulesWithOneLoader(venusConfig, ClassLoader.getSystemClassLoader());
-    ModuleLayer marsLayer = parent.defineModulesWithOneLoader(marsConfig, ClassLoader.getSystemClassLoader());
+    final ClassLoader venusClassLoader = new CustomClassLoader(ClassLoader.getSystemClassLoader(), "Venus");
 
+    //ModuleLayer venusLayer = parent.defineModulesWithOneLoader(venusConfig, venusClassLoader);
 
-    Planet planet;
+    ModuleLayer.Controller venusController = parent.defineModules(venusConfig, List.of(parent), s -> {
 
-    planet = findPlanet(venusLayer, "org.venus.Venus");
+      System.out.println("Check: " + s + s.equals("org.venus"));
+      if (s.equals("org.venus")) {
+        return venusClassLoader;
+      }
+      System.exit(0);
+      return ClassLoader.getSystemClassLoader();
+    });
+    ModuleLayer venusLayer= venusController.layer();
+
+    Planet planet = findPlanet(venusLayer, "org.venus.Venus");
+
+    System.out.println("Naam: " + planet.getName() + planet.getClass().getClassLoader());
+
+    /*
+
+    planet = findPlanet(layer, "org.mars.Mars");
     System.out.println("Naam: " + planet.getName());
+    File file = new File("org.demo/target/classes" + "/module-info.class");
+    System.out.println(CustomClassLoader.loadFile(file));
 
-    planet = findPlanet(marsLayer, "org.mars.Mars");
-    System.out.println("Naam: " + planet.getName());
-
+*/
   }
 
   private static Planet findPlanet(ModuleLayer layer, String planetName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {

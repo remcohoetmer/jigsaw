@@ -23,9 +23,9 @@ public class CustomClassLoader extends ClassLoader {
   }
 
   public Class loadClass(String name) throws ClassNotFoundException {
+    System.out.println("Load class" + name);
     if (!classesToLoad.contains(name))
       return super.loadClass(name);
-    System.out.println("Load class" + name);
 
     String fileName = name.replace('.', '/') + ".class";
     String url = location + fileName;
