@@ -40,12 +40,12 @@ public class ClassLoadingDemo {
 
     Planet planet = findPlanet(venusLayer, "org.venus.Venus");
 
-    System.out.println("Naam: " + planet.getName());
+    System.out.println("Naam: " + planet.describe());
 
     /*
 
     planet = findPlanet(layer, "org.mars.Mars");
-    System.out.println("Naam: " + planet.getName());
+    System.out.println("Naam: " + planet.describe());
     File file = new File("org.demo/target/classes" + "/module-info.class");
     System.out.println(CustomClassLoader.loadFile(file));
 

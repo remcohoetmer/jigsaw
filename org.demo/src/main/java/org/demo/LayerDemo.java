@@ -21,16 +21,16 @@ public class LayerDemo {
 
     Configuration config = parent.configuration().resolve(ModuleFinder.of(venusPath, marsPath), ModuleFinder.of(), Set.of("org.venus", "org.mars"));
 // als je ze in dezelfde classloader stopt gaat het mis vanwege org.common
-  // ModuleLayer layer = parent.defineModulesWithOneLoader(config, ClassLoader.getSystemClassLoader());
-    ModuleLayer layer = parent.defineModulesWithManyLoaders(config, ClassLoader.getSystemClassLoader());
+   ModuleLayer layer = parent.defineModulesWithOneLoader(config, ClassLoader.getSystemClassLoader());
+  //  ModuleLayer layer = parent.defineModulesWithManyLoaders(config, ClassLoader.getSystemClassLoader());
 
     Planet planet;
 
     planet = findPlanet(layer, "org.venus.Venus");
-    System.out.println("Naam: " + planet.getName());
+    System.out.println("Naam: " + planet.describe());
 
     planet = findPlanet(layer, "org.mars.Mars");
-    System.out.println("Naam: " + planet.getName());
+    System.out.println("Naam: " + planet.describe());
     // Common Module is zichtbaar in beide classloaders
     findClass(layer, "org.venus", "org.common.Common");
     findClass(layer, "org.mars", "org.common.Common");
@@ -50,10 +50,10 @@ public class LayerDemo {
     Planet planet;
 
     planet = findPlanet(venusLayer, "org.venus.Venus");
-    System.out.println("Naam: " + planet.getName());
+    System.out.println("Naam: " + planet.describe());
 
     planet = findPlanet(marsLayer, "org.mars.Mars");
-    System.out.println("Naam: " + planet.getName());
+    System.out.println("Naam: " + planet.describe());
     findClass(venusLayer, "org.venus", "org.common.Common");
     findClass(marsLayer, "org.mars", "org.common.Common");
 
@@ -72,9 +72,9 @@ public class LayerDemo {
     Planet planet;
 
     planet = findPlanet(venusLayer1, "org.venus.Venus");
-    System.out.println("Naam: " + planet.getName());
+    System.out.println("Naam: " + planet.describe());
     planet = findPlanet(venusLayer2, "org.venus.Venus");
-    System.out.println("Naam: " + planet.getName());
+    System.out.println("Naam: " + planet.describe());
 
 
   }

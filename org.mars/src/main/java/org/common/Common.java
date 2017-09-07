@@ -1,5 +1,5 @@
 package org.common;
 
 public class Common {
-  public static String version = "man";
+  public static String type = "man";
 }
